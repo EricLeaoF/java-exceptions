@@ -39,7 +39,7 @@ public class Reservation {
     }
 
     public long duration() {
-        Duration diff = Duration.between(getCheckIn(), getCheckOut());
+        Duration diff = Duration.between(getCheckIn().atStartOfDay(), getCheckOut().atStartOfDay());
 
         return diff.toDays();
     }
@@ -51,6 +51,6 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation: Room " + roomNumber + ", check-in: " + dateFormat.format(checkIn) + ", check-out: " + dateFormat.format(checkOut) + ", " + duration() + " nights";
+        return "Reservation: Room " + roomNumber + ", check-in: " + dateFormat.format(getCheckIn()) + ", check-out: " + dateFormat.format(getCheckOut()) + ", " + duration() + " nights";
     }
 }
