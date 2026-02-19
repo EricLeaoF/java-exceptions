@@ -44,9 +44,21 @@ public class Reservation {
         return diff.toDays();
     }
 
-    public void updateDates(LocalDate checkIn, LocalDate checkOut) {
+    public String updateDates(LocalDate checkIn, LocalDate checkOut) {
+
+        LocalDate now = LocalDate.now();
+
+        if (checkIn.isBefore(now) || checkOut.isBefore(now)) {
+            return "Invalid checkIn or checkOut. You need to specify dates higher than today";
+        }
+        if (checkIn.isAfter(checkOut)) {
+            return "Error in reservation: check-out date must be after check-in date";
+        }
+
         this.checkIn = checkIn;
         this.checkOut = checkOut;
+
+        return null;
     }
 
     @Override

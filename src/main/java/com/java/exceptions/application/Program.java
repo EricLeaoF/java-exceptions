@@ -31,22 +31,18 @@ public class Program {
             System.out.println();
             System.out.println("Enter data to update the reservation:");
 
-            System.out.println("Check-in date (DD/MM/YYYY): ");
+            System.out.println("Check-in date (DD/MM/YYYY):");
             checkIn = LocalDate.parse(sc.next(), dateFormat);
             System.out.println("Check-out date (DD/MM/YYYY): ");
             checkOut = LocalDate.parse(sc.next(), dateFormat);
 
-            LocalDate now = LocalDate.now();
-
-            if (checkIn.isBefore(now) || checkOut.isBefore(now)) {
-                System.out.println("Invalid checkIn or checkOut. You need to specify dates higher than today");
-            } else if (checkIn.isAfter(checkOut)) {
-                System.out.println("Error in reservation: check-out date must be after check-in date");
+            String error = reservation.updateDates(checkIn, checkOut);
+            if (error != null) {
+                System.out.println("Error in reservation: " + error);
             } else {
-                reservation.updateDates(checkIn, checkOut);
-
                 System.out.println(reservation);
             }
+
         }
 
         sc.close();
