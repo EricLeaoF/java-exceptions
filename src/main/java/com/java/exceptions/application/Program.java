@@ -1,12 +1,11 @@
 package com.java.exceptions.application;
 
-import com.java.exceptions.entities.Reservation;
+import com.java.exceptions.model.entities.Reservation;
+import com.java.exceptions.model.exceptions.DomainException;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Program {
@@ -41,7 +40,7 @@ public class Program {
 
             sc.close();
 
-        } catch (IllegalArgumentException e) {
+        } catch (DomainException e) {
             System.out.println("Error " + e.getMessage());
         } catch (DateTimeParseException e) {
             System.out.println("Error parsing dates " + e.getMessage());

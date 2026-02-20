@@ -1,4 +1,6 @@
-package com.java.exceptions.entities;
+package com.java.exceptions.model.entities;
+
+import com.java.exceptions.model.exceptions.DomainException;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -16,7 +18,11 @@ public class Reservation {
 
     }
 
-    public Reservation(Integer roomNumber, LocalDate checkIn, LocalDate checkOut) {
+    public Reservation(Integer roomNumber, LocalDate checkIn, LocalDate checkOut) throws DomainException {
+        if (checkIn.isAfter(checkOut)) {
+            throw new DomainException("Error in reservation: check-out date must be after check-in date");
+        }
+
         this.roomNumber = roomNumber;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -44,15 +50,15 @@ public class Reservation {
         return diff.toDays();
     }
 
-    public void updateDates(LocalDate checkIn, LocalDate checkOut) {
+    public void updateDates(LocalDate checkIn, LocalDate checkOut) throws DomainException {
 
         LocalDate now = LocalDate.now();
 
         if (checkIn.isBefore(now) || checkOut.isBefore(now)) {
-            throw new IllegalArgumentException("Invalid checkIn or checkOut. You need to specify dates higher than today");
+            throw new DomainException("Invalid checkIn or checkOut. You need to specify dates higher than today");
         }
         if (checkIn.isAfter(checkOut)) {
-            throw new IllegalArgumentException("Error in reservation: check-out date must be after check-in date");
+            throw new DomainException("Error in reservation: check-out date must be after check-in date");
         }
 
         this.checkIn = checkIn;
